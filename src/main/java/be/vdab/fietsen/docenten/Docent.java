@@ -15,6 +15,11 @@ public class Docent {
     private String voornaam;
     private String familienaam;
     private BigDecimal wedde;
+    private String emailAdres;
+
+    public String getEmailAdres() {
+        return emailAdres;
+    }
 
     public long getId() {
         return id;
