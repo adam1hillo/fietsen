@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +42,19 @@ class DocentService {
         } catch (DataIntegrityViolationException ex) {
             throw new DocentBestaatAlException();
         }
+    }
+    @Transactional
+    void delete(long id) {
+        docentRepository.deleteById(id);
+    }
+
+    List<Docent> findByWedde(BigDecimal wedde) {
+        return docentRepository.findByWeddeOrderByFamilienaam(wedde);
+    }
+    Optional<Docent> findByEmailAdres(String emailAdres) {
+        return docentRepository.findByEmailAdres(emailAdres);
+    }
+    int findAantalByWedde(BigDecimal wedde) {
+        return docentRepository.countByWedde(wedde);
     }
 }
