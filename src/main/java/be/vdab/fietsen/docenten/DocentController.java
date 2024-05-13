@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -60,5 +61,21 @@ class DocentController {
     @GetMapping(value = "aantal", params = "wedde")
     int findAantalMetWedde(BigDecimal wedde) {
         return docentService.findAantalByWedde(wedde);
+    }
+    @GetMapping("metGrootsteWedde")
+    List<Docent> findMetGrootsteWedde() {
+        return docentService.findMetGrootsteWedde();
+    }
+    @GetMapping("weddes/grootste")
+    BigDecimal findGrootsteWedde() {
+        return docentService.findGrootsteWedde();
+    }
+    @GetMapping("namen")
+    List<EnkelNaam> findNamen() {
+        return docentService.findNamen();
+    }
+    @GetMapping("aantalPerWedde")
+    List<AantalDocentenPerWedde> findAantalDocentenPerWedde() {
+        return docentService.findAantalDocentenPerWedde();
     }
 }

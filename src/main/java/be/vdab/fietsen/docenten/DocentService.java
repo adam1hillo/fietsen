@@ -57,4 +57,16 @@ class DocentService {
     int findAantalByWedde(BigDecimal wedde) {
         return docentRepository.countByWedde(wedde);
     }
+    List<Docent> findMetGrootsteWedde() {
+        return docentRepository.findMetGrootsteWedde();
+    }
+    BigDecimal findGrootsteWedde() {
+        return docentRepository.findGrootsteWedde();
+    }
+    List<EnkelNaam> findNamen() {
+        return docentRepository.findNamen();
+    }
+    List<AantalDocentenPerWedde> findAantalDocentenPerWedde() {
+        return docentRepository.findAantalDocentenPerWedde();
+    }
 }
