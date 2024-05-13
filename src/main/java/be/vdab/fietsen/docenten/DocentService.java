@@ -69,4 +69,10 @@ class DocentService {
     List<AantalDocentenPerWedde> findAantalDocentenPerWedde() {
         return docentRepository.findAantalDocentenPerWedde();
     }
+    @Transactional
+    void wijzigWedde(long id, BigDecimal wedde) {
+        docentRepository.findById(id)
+                .orElseThrow(DocentNietGevondenException::new)
+                .setWedde(wedde);
+    }
 }

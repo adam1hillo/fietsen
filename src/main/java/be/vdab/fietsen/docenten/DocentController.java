@@ -1,6 +1,8 @@
 package be.vdab.fietsen.docenten;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,5 +79,9 @@ class DocentController {
     @GetMapping("aantalPerWedde")
     List<AantalDocentenPerWedde> findAantalDocentenPerWedde() {
         return docentService.findAantalDocentenPerWedde();
+    }
+    @PatchMapping("{id}/wedde")
+    void wijzigWedde(@PathVariable long id, @RequestBody @NotNull @Positive BigDecimal wedde) {
+        docentService.wijzigWedde(id, wedde);
     }
 }
