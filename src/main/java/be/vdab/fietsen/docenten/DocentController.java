@@ -7,10 +7,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.Doc;
+
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("docenten")
