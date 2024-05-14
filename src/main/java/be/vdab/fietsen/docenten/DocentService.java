@@ -71,8 +71,12 @@ class DocentService {
     }
     @Transactional
     void wijzigWedde(long id, BigDecimal wedde) {
-        docentRepository.findById(id)
+        docentRepository.findAndLockById(id)
                 .orElseThrow(DocentNietGevondenException::new)
                 .setWedde(wedde);
+    }
+    @Transactional
+    void algemeneOpslag(BigDecimal bedrag) {
+        docentRepository.algemeneOpslag(bedrag);
     }
 }

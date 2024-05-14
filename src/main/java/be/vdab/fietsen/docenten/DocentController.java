@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.Doc;
@@ -82,6 +83,15 @@ class DocentController {
     }
     @PatchMapping("{id}/wedde")
     void wijzigWedde(@PathVariable long id, @RequestBody @NotNull @Positive BigDecimal wedde) {
-        docentService.wijzigWedde(id, wedde);
+        try {
+            docentService.wijzigWedde(id, wedde);
+        } catch (OptimisticLockingFailureException ex) {
+            throw new EenAndereGebruikerWijzigdeDeDocentException();
+        }
     }
+    @PostMapping("weddeverhogingen")
+    void algemeneOpslag(@RequestBody @NotNull @Positive BigDecimal bedrag) {
+        docentService.algemeneOpslag(bedrag);
+    }
+
 }

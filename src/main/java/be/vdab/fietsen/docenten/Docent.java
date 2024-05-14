@@ -18,6 +18,9 @@ class Docent {
     @Enumerated(EnumType.STRING)
     private Geslacht geslacht;
 
+    @Version
+    private long versie;
+
     protected Docent() {}
 
     Docent(String voornaam, String familienaam, BigDecimal wedde, String emailAdres, Geslacht geslacht) {
