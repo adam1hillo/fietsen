@@ -12,11 +12,12 @@ class GroepsCursus extends Cursus{
     private LocalDate van;
     private LocalDate tot;
 
-    LocalDate getVan() {
+
+    public LocalDate getVan() {
         return van;
     }
 
-    LocalDate getTot() {
+    public LocalDate getTot() {
         return tot;
     }
 }

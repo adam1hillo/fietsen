@@ -9,6 +9,7 @@ import java.util.List;
 @RestController
 @RequestMapping("cursussen")
 class CursusController {
+
     private final CursusService cursusService;
 
     CursusController(CursusService cursusService) {
@@ -23,7 +24,7 @@ class CursusController {
         return cursusService.findGroepsCursussen();
     }
     @GetMapping("individueel")
-    List<IndividueleCursus> findIndividueleCurssusen() {
-        return cursusService.findIndividueleCurssusen();
+    List<IndividueleCursus> findIndividueleCursussen() {
+        return cursusService.findIndividueleCursussen();
     }
 }

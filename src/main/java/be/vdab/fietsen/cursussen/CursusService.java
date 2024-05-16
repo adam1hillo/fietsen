@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 class CursusService {
+
     private final CursusRepository cursusRepository;
 
     CursusService(CursusRepository cursusRepository) {
@@ -17,10 +18,12 @@ class CursusService {
     List<Cursus> findAll() {
         return cursusRepository.findAll();
     }
+
     List<GroepsCursus> findGroepsCursussen() {
         return cursusRepository.findGroepsCursussen();
+
     }
-    List<IndividueleCursus> findIndividueleCurssusen() {
+    List<IndividueleCursus> findIndividueleCursussen() {
         return cursusRepository.findIndividueleCursussen();
     }
 }
