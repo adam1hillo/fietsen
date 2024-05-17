@@ -3,6 +3,10 @@ package be.vdab.fietsen.docenten;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "docenten")
@@ -17,45 +21,63 @@ class Docent {
     private String emailAdres;
     @Enumerated(EnumType.STRING)
     private Geslacht geslacht;
-
     @Version
     private long versie;
 
-    protected Docent() {}
+    @ElementCollection
+    @CollectionTable(name = "bijnamen", joinColumns = @JoinColumn(name = "docentId"))
+    @Column(name = "bijnaam")
+    private Set<String> bijnamen;
 
-    Docent(String voornaam, String familienaam, BigDecimal wedde, String emailAdres, Geslacht geslacht) {
+    protected Docent(){
+
+    }
+    public Docent(String voornaam, String familienaam, BigDecimal wedde, String emailAdres, Geslacht geslacht) {
         this.voornaam = voornaam;
         this.familienaam = familienaam;
         this.wedde = wedde;
         this.emailAdres = emailAdres;
         this.geslacht = geslacht;
+        bijnamen = new LinkedHashSet<>();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getVoornaam() {
+        return voornaam;
+    }
+
+    public String getFamilienaam() {
+        return familienaam;
     }
 
     void setWedde(BigDecimal wedde) {
         this.wedde = wedde;
     }
 
-    Geslacht getGeslacht() {
-        return geslacht;
+    public BigDecimal getWedde() {
+        return wedde;
     }
 
-    String getEmailAdres() {
+    public String getEmailAdres() {
         return emailAdres;
     }
 
-    long getId() {
-        return id;
+    public Geslacht getGeslacht() {
+        return geslacht;
     }
 
-    String getVoornaam() {
-        return voornaam;
+    void voegBijnaamToe(String bijnaam) {
+        if (!bijnamen.add(bijnaam)) {
+            throw new DocentHeeftDezeBijnaamAlException();
+        }
     }
-
-    String getFamilienaam() {
-        return familienaam;
+    void verwijderBijnaam(String bijnaam) {
+        bijnamen.remove(bijnaam);
     }
-
-    BigDecimal getWedde() {
-        return wedde;
+    public Set<String> getBijnamen() {
+        return Collections.unmodifiableSet(bijnamen);
     }
 }

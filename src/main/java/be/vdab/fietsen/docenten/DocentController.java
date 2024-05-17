@@ -1,6 +1,7 @@
 package be.vdab.fietsen.docenten;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -92,6 +93,21 @@ class DocentController {
     @PostMapping("weddeverhogingen")
     void algemeneOpslag(@RequestBody @NotNull @Positive BigDecimal bedrag) {
         docentService.algemeneOpslag(bedrag);
+    }
+
+    @PostMapping("{id}/bijnamen")
+    void voegBijnaamToe(@PathVariable long id, @RequestBody @NotBlank String bijnaam) {
+        docentService.voegBijnaamToe(id, bijnaam);
+    }
+    @DeleteMapping("{id}/bijnamen/{bijnaam}")
+    void verwijderBijnaam(@PathVariable long id, @PathVariable String bijnaam) {
+        docentService.verwijderBijnaam(id, bijnaam);
+    }
+    @GetMapping("{id}/emailAdres")
+    String findEmailAdresById(@PathVariable long id) {
+        return docentService.findById(id)
+                .orElseThrow(DocentNietGevondenException::new)
+                .getEmailAdres();
     }
 
 }
