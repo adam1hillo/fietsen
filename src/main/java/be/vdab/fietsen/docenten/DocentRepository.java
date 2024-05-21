@@ -44,4 +44,7 @@ interface DocentRepository extends JpaRepository<Docent, Long> {
     update Docent d
     set d.wedde = d.wedde + :bedrag""")
     void algemeneOpslag(BigDecimal bedrag);
+
+    @Query("select d from Docent d join fetch d.bijnamen")
+    List<Docent> findAllMetBijnamen();
 }
