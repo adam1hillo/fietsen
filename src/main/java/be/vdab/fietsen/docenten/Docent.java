@@ -1,5 +1,6 @@
 package be.vdab.fietsen.docenten;
 
+import be.vdab.fietsen.campussen.Campus;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -29,15 +30,20 @@ class Docent {
     @Column(name = "bijnaam")
     private Set<String> bijnamen;
 
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "campusId")
+    private Campus campus;
+
     protected Docent(){
 
     }
-    public Docent(String voornaam, String familienaam, BigDecimal wedde, String emailAdres, Geslacht geslacht) {
+    public Docent(String voornaam, String familienaam, BigDecimal wedde, String emailAdres, Geslacht geslacht, Campus campus) {
         this.voornaam = voornaam;
         this.familienaam = familienaam;
         this.wedde = wedde;
         this.emailAdres = emailAdres;
         this.geslacht = geslacht;
+        this.campus = campus;
         bijnamen = new LinkedHashSet<>();
     }
 
@@ -79,5 +85,9 @@ class Docent {
     }
     public Set<String> getBijnamen() {
         return Collections.unmodifiableSet(bijnamen);
+    }
+
+    public Campus getCampus() {
+        return campus;
     }
 }

@@ -1,10 +1,12 @@
 package be.vdab.fietsen.docenten;
 
+import be.vdab.fietsen.campussen.CampusRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.print.Doc;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +15,11 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 class DocentService {
     private final DocentRepository docentRepository;
+    private final CampusRepository campusRepository;
 
-    DocentService(DocentRepository docentRepository) {
+    DocentService(DocentRepository docentRepository, CampusRepository campusRepository) {
         this.docentRepository = docentRepository;
+        this.campusRepository = campusRepository;
     }
 
     long findAantal() {
@@ -35,8 +39,10 @@ class DocentService {
     @Transactional
     long create(NieuweDocent nieuweDocent) {
         try {
+            var campus = campusRepository.findById(nieuweDocent.campusId())
+                    .orElseThrow(CampusInDocentNietGevondenException::new);
             var docent = new Docent(nieuweDocent.voornaam(), nieuweDocent.familienaam(), nieuweDocent.wedde(),
-                    nieuweDocent.emailAdres(), nieuweDocent.geslacht());
+                    nieuweDocent.emailAdres(), nieuweDocent.geslacht(), campus);
             docentRepository.save(docent);
             return docent.getId();
         } catch (DataIntegrityViolationException ex) {
@@ -94,5 +100,8 @@ class DocentService {
     }
     List<Docent> findAllMetBijnamen() {
         return docentRepository.findAllMetBijnamen();
+    }
+    List<Docent> findAllMetCampussen() {
+        return docentRepository.findAllMetCampussen();
     }
 }
