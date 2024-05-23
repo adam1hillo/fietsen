@@ -5,13 +5,13 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "docenten")
-class Docent {
+public class Docent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -90,4 +90,14 @@ class Docent {
     public Campus getCampus() {
         return campus;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        return object instanceof Docent docent && emailAdres.equalsIgnoreCase(docent.emailAdres);
+    }
+    @Override
+    public int hashCode() {
+        return emailAdres.toLowerCase().hashCode();
+    }
+
 }
