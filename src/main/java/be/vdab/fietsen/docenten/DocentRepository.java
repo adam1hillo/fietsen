@@ -1,6 +1,8 @@
 package be.vdab.fietsen.docenten;
 
 
+import jakarta.persistence.Entity;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 interface DocentRepository extends JpaRepository<Docent, Long> {
 
+    @EntityGraph(attributePaths = "campus")
     List<Docent> findByWeddeOrderByFamilienaam(BigDecimal wedde);
     Optional<Docent> findByEmailAdres(String emailAdres);
     int countByWedde(BigDecimal wedde);
