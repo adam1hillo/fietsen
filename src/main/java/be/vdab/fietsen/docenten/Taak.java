@@ -3,6 +3,7 @@ package be.vdab.fietsen.docenten;
 import jakarta.persistence.*;
 
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,7 +18,14 @@ public class Taak {
             name = "docententaken",
             joinColumns = @JoinColumn(name = "taakId"),
             inverseJoinColumns = @JoinColumn(name = "docentId"))
+    @OrderBy("voornaam, familienaam")
     private Set<Docent> docenten;
+
+    protected Taak() {}
+    public Taak(String naam) {
+        this.naam = naam;
+        docenten = new LinkedHashSet<>();
+    }
     void add(Docent docent) {
         if (!docenten.add(docent)) {
             throw new DocentHeeftDezeTaakAlException();
