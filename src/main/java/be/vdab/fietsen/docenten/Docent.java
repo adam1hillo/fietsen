@@ -34,6 +34,11 @@ public class Docent {
     @JoinColumn(name = "campusId")
     private Campus campus;
 
+    @ManyToMany(mappedBy = "docenten")
+    @OrderBy("naam")
+    private Set<Taak> taken;
+
+
     protected Docent(){
 
     }
@@ -45,6 +50,7 @@ public class Docent {
         this.geslacht = geslacht;
         this.campus = campus;
         bijnamen = new LinkedHashSet<>();
+        taken = new LinkedHashSet<>();
     }
 
     public long getId() {
@@ -100,4 +106,12 @@ public class Docent {
         return emailAdres.toLowerCase().hashCode();
     }
 
+    void add(Taak taak) {
+        if (!taken.add(taak)) {
+            throw new DocentHeeftDezeTaakAlException();
+        }
+    }
+    public Set<Taak> getTaken() {
+        return Collections.unmodifiableSet(taken);
+    }
 }

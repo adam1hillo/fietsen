@@ -1,6 +1,7 @@
 package be.vdab.fietsen.campussen;
 
 import be.vdab.fietsen.docenten.Docent;
+import be.vdab.fietsen.docenten.Taak;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
